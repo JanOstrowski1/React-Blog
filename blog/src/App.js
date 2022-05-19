@@ -1,4 +1,5 @@
 import React from 'react';
+import Home from './pages/home/Home';
 import TopBar from "./topbar/TopBar";
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
     <div className="App">
       <>
       <TopBar/>
-
+      <Home/>
     
       </>
     </div>
