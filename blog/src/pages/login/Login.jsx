@@ -1,10 +1,11 @@
 import React from 'react';
 import "./login.css"
 import "../../components/sidebar/SideBar"
-import SideBar from "../../components/sidebar/SideBar";
+import { Link } from "react-router-dom";
+
 export default function Login() {
     return (
-        <div className="register" >
+        <div className="login" >
             <span className="loginTitle">Login</span>
             <form className="loginForm">
                 <label>Email</label>
@@ -13,7 +14,9 @@ export default function Login() {
                 <input type="password" className="loginInput" placeholder="Enter your password..."/>
                 <button className="loginButton">Login</button>
             </form>
-            <button className="loginRegisterButton">Register</button>
+            <button className="loginRegisterButton">
+                <Link to="/register" className="link">Register</Link>
+            </button>
         </div>
     )
 }
