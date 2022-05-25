@@ -1,11 +1,15 @@
 const express=require("express");
 const app= express();
+const dotenv = require("dotenv");
+const mongoose = require('mongoose');
 
-console.log("HEaaa");
+dotenv.config();
 
-app.use("/",(req,res)=>{
-    console.log("hello there");
-})
+mongoose
+    .connect(process.env.MONGO_URL)
+    .then(console.log("connected to Mongo DB"))
+    .catch((err)=>console.log(err));
+
 
 
 app.listen("5000", ()=>{
