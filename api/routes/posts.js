@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
-const bcrypt = require("bcrypt");
 
 //CREATE POST
 router.post("/", async (req, res) => {
@@ -69,7 +68,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const post = await Post.findById((req.params.id));
-        res.set(200).json(post);
+        res.status(200).json(post);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -77,9 +76,21 @@ router.get("/:id", async (req, res) => {
 
 //GET ALL POSTS
 router.get("/", async (req, res) => {
+    const username=req.query.user;
+    const catName=req.query.cat;
     try {
-        const post = await Post.findById((req.params.id));
-        res.set(200).json(post);
+        let posts;
+        if(username){
+            posts = await Post.find({username})
+        }else if(catName){
+            posts = await Post.find({categories:{
+                 $in:[catName]
+                }});
+        }else{
+            posts= await Post.find();
+        }
+
+        res.status(200).json(posts);
     } catch (err) {
         res.status(500).json(err);
     }
