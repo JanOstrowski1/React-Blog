@@ -14,9 +14,18 @@ router.post("/register", async (req, res) => {
             })
 
             const user = await newUser.save();
-            res.status(200).json(user);
+            res.status(201).json(user);
+
         } catch (err) {
-            res.status(500).json(err);
+            if (User.findOne({username: req.body.username})) {
+                res.status(400);
+            } else if (User.findOne({email: req.body.email})) {
+                res.status(406);
+            }else {
+                res.status(500).json(err);
+            }
+
+
         }
     }
 );
@@ -28,15 +37,15 @@ router.post("/login", async (req, res) => {
     try {
         const user = await User.findOne({username: req.body.username});
         if (!user) {
-            res.status(400).json("Wrong credentials!");
+            res.status(401).json("Wrong credentials!");
         }
 
         const validated = await bcrypt.compare(req.body.password, user.password);
         if (!validated) {
-            res.status(400).json("Wrong credentials!");
+            res.status(401).json("Wrong credentials!");
         } else {
-            const {password,...others}=user._doc;
-            res.status(200).json(others);
+            const {password, ...others} = user._doc;
+            res.status(201).json(others);
         }
 
     } catch (err) {

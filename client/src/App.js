@@ -16,7 +16,7 @@ import {
 
 
 function App() {
-    const userLoggedIn= true;
+    const userLoggedIn= false;
     let RegisterOrRedirect=<Register/>;
     let LoginOrRedirect=<Login/>;
     let WriteOrRedirect=<Register/>;

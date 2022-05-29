@@ -53,3 +53,16 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
+
+.postReadMore{
+    content: "read more";
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+    color: #999;
+    text-decoration: none;
+    border-bottom: #999999;
+    display: flex;
+    justify-content: center;
+
+    /*float: right;*/
+}
