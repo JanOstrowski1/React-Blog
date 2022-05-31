@@ -8,30 +8,33 @@ export default function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
 
 
-    const handleSubmit= async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-       try{
-           const res = await axios.post("/auth/register", {
-               username,
-               email,
-               password
-           });
-           if(res.status===201){
-               alert("Użytkownik został dodany!");
-           }else if(res.status===400){
-               alert("Użytkownik o podanym nicku już istnieje!");
-           }else if(res.status===406){
-               alert("Użytkownik o podanym adresie e-mail już istnieje!");
-           }
-           res.data && window.location.replace("/login");
+        setError("no_error");
+        try {
+            const res = await axios.post("/auth/register", {
+                username,
+                email,
+                password
+            });
+            if (res.status === 201) {
+                alert("Użytkownik został dodany!");
+            } else if (res.status === 400) {
+                alert("Użytkownik o podanym nicku już istnieje!");
+                setError("user_exists_error");
+            } else if (res.status === 406) {
+                alert("Użytkownik o podanym adresie e-mail już istnieje!");
+                setError("email_exists_error");
+            }
+            res.data && window.location.replace("/login");
 
-       }catch (err){
-           console.log(err);
-           setError(true);
-       }
+        } catch (err) {
+            console.log(err);
+            setError("bad_error");
+        }
     };
 
     return (
@@ -55,6 +58,10 @@ export default function Register() {
             <button className="registerLoginButton">
                 <Link to="/login" className="link">LOGIN</Link>
             </button>
+            {(error==="bad_error") && <span className="error1">Something went wrong</span>}
+            {(error==="user_exists_error") && <span className="error1">User with this nickname already exists</span>}
+            {(error==="email_exists_error") && <span className="error1">User with this email already exists</span>}
+
         </div>
     )
 }

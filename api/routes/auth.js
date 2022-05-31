@@ -8,8 +8,8 @@ router.post("/register", async (req, res) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
             const newUser = new User({
-                username: req.body.username,
-                email: req.body.email,
+                username: req.body.username.trim(),
+                email: req.body.email.trim(),
                 password: hashedPassword,
             })
 
@@ -17,11 +17,14 @@ router.post("/register", async (req, res) => {
             res.status(201).json(user);
 
         } catch (err) {
-            if (User.findOne({username: req.body.username})) {
-                res.status(400);
-            } else if (User.findOne({email: req.body.email})) {
-                res.status(406);
-            }else {
+            const userWithSameNickName = await User.findOne({username: req.body.username});
+            const userWithSameEmail = await User.findOne({email: req.body.email});
+
+            if (userWithSameNickName) {
+                res.status(400).json(err);
+            } else if (userWithSameEmail) {
+                res.status(406).json(err);
+            } else {
                 res.status(500).json(err);
             }
 
