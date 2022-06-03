@@ -41,6 +41,11 @@
     padding: 10px;
 }
 
+.loginButton:disabled{
+    cursor: progress;
+    background-color: #f1afaf;
+}
+
 .loginRegisterButton {
     position: absolute;
     top: 60px;
@@ -51,4 +56,12 @@
     padding: 10px;
     color: white;
     border-radius: 10px;
+}
+
+.error1{
+    color:red;
+    margin-top: 10px;
+    place-self: center;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 900;
 }

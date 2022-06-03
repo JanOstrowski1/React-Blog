@@ -21,9 +21,9 @@ router.post("/register", async (req, res) => {
             const userWithSameEmail = await User.findOne({email: req.body.email});
 
             if (userWithSameNickName) {
-                res.status(400).json(err);
+                res.status(400).json('user with nickname: '+ req.body.username +'already exists');
             } else if (userWithSameEmail) {
-                res.status(406).json(err);
+                res.status(406).json('user with email:'+ req.body.email +'already exists');
             } else {
                 res.status(500).json(err);
             }

@@ -22,18 +22,22 @@ export default function Register() {
             });
             if (res.status === 201) {
                 alert("Użytkownik został dodany!");
-            } else if (res.status === 400) {
-                alert("Użytkownik o podanym nicku już istnieje!");
-                setError("user_exists_error");
-            } else if (res.status === 406) {
-                alert("Użytkownik o podanym adresie e-mail już istnieje!");
-                setError("email_exists_error");
             }
             res.data && window.location.replace("/login");
 
         } catch (err) {
-            console.log(err);
-            setError("bad_error");
+            if (err.message ===  'Request failed with status code 400') {
+                console.log("Użytkownik o podanym nicku już istnieje!");
+                setError("user_exists_error");
+            } else if (err.message ===  'Request failed with status code 406') {
+                console.log("Użytkownik o podanym adresie e-mail już istnieje!");
+                setError("email_exists_error");
+            } else {
+                console.log(err);
+                setError("bad_error");
+            }
+
+
         }
     };
 
@@ -58,9 +62,9 @@ export default function Register() {
             <button className="registerLoginButton">
                 <Link to="/login" className="link">LOGIN</Link>
             </button>
-            {(error==="bad_error") && <span className="error1">Something went wrong</span>}
-            {(error==="user_exists_error") && <span className="error1">User with this nickname already exists</span>}
-            {(error==="email_exists_error") && <span className="error1">User with this email already exists</span>}
+            {(error === "bad_error") && <span className="error1">Something went wrong</span>}
+            {(error === "user_exists_error") && <span className="error1">User with this nickname already exists</span>}
+            {(error === "email_exists_error") && <span className="error1">User with this email already exists</span>}
 
         </div>
     )

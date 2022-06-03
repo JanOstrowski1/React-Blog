@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Home from './pages/home/Home';
 import Single from './pages/single/Single';
 import TopBar from "./components/topbar/TopBar";
@@ -13,15 +13,17 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import {Context} from "./context/Context";
 
 
 function App() {
-    const userLoggedIn= false;
+    const {user}= useContext(Context);
+
     let RegisterOrRedirect=<Register/>;
     let LoginOrRedirect=<Login/>;
     let WriteOrRedirect=<Register/>;
     let SettingsOrRedirect=<Register/>;
-    if(userLoggedIn){
+    if(user){
         RegisterOrRedirect=<Home/>;
         LoginOrRedirect=<Home/>;
         WriteOrRedirect=<Write/>;

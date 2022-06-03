@@ -55,6 +55,9 @@
 }
 
 .error1{
-    color:red;
+    color:teal;
     margin-top: 10px;
+    place-self: center;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 900;
 }

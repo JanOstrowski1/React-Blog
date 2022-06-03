@@ -1,4 +1,3 @@
-import React from 'react';
 const Reducer = (state,action)=>{
     switch (action.type){
         case "LOGIN_START":
@@ -18,6 +17,13 @@ const Reducer = (state,action)=>{
                 user:null,
                 isFetching:false,
                 error:true,
+            }
+
+        case "LOGOUT":
+            return{
+                user:null,
+                isFetching:false,
+                error:false,
             }
         default:{
             return state;
