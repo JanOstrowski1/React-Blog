@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import "./singlePost.css"
 import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import {Context} from "../../context/Context";
 
 
 export default function SinglePost() {
     const location = useLocation();
     const path = location.pathname.split('/')[2];
     const [post, setPost] = useState({});
-
+    const PF = "http://localhost:5000/images/"
+    const {user} = useContext(Context);
     useEffect(() => {
         const getPost = async () => {
             const res = await axios.get("/posts/" + path);
@@ -19,19 +21,23 @@ export default function SinglePost() {
         getPost();
     }, [path]);
 
+
     return (
         <div className="singlePost">
             <div className="singlePostWrapper">
-                {post.photo && (<img className="singlePostImg" src={post.photo} alt=""/>)}
+                {post.photo && (<img className="singlePostImg" src={PF + post.photo} alt=""/>)}
                 {/*{!post.photo && (<img className="singlePostImg" src="https://www.votesforyou.eu/images/titul/1-girl.jpg" alt=""/>)}*/}
 
 
                 <h1 className="singlePostTitle">
                     {post.title}
-                    <div className="singlePostEdit">
-                        <i className="singlePostIcon fa-solid fa-pen-to-square"/>
-                        <i className="singlePostIcon fa-solid fa-trash-can"/>
-                    </div>
+                    {(user && post.username === user.username) && (
+                        <div className="singlePostEdit">
+                            <i className="singlePostIcon fa-solid fa-pen-to-square"/>
+                            <i className="singlePostIcon fa-solid fa-trash-can"/>
+                        </div>
+                    )}
+
                 </h1>
                 <div className="singlePostInfo">
                     <span className="singlePostAuthor">Author:
