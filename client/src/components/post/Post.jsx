@@ -7,7 +7,7 @@ export default function Post({post}) {
     return (
         <div className="post">
             {post.photo && (
-                <img className="postImg" src={PF + post.photo} alt=""/>
+                <img className="postImg" src={PF + post.photo} alt="Not Found"  />
             )}
             {!post.photo && ( //filler image
                     <img className="postImg" src="https://thumbs.dreamstime.com/b/cropped-photo-funny-lady-show-perfect-condition-beaming-smile-tongue-wear-red-dress-isolated-purple-background-156386488.jpg" alt=""/>
