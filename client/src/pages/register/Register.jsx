@@ -21,9 +21,9 @@ export default function Register() {
                 password
             });
             if (res.status === 201) {
-                alert("Użytkownik został dodany!");
+                res.data && window.location.replace("/login");
             }
-            res.data && window.location.replace("/login");
+
 
         } catch (err) {
             if (err.message ===  'Request failed with status code 400') {

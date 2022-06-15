@@ -21,6 +21,8 @@ export default function SinglePost() {
         const getPost = async () => {
             const res = await axios.get("/posts/" + path);
             setPost(res.data);
+            setTitle(res.data.title);
+            setDesc(res.data.desc);
         };
         getPost();
     }, [path]);
@@ -35,6 +37,15 @@ export default function SinglePost() {
         }
     }
 
+    const handleUpdate=async ()=>{
+        try{
+            await axios.put("/posts/"+path  , {username:user.username,title,desc});
+            setUpdateMode(false);
+        }catch (err){
+            console.log(err);
+        }
+    }
+
     return (
         <div className="singlePost">
             <div className="singlePostWrapper">
@@ -42,9 +53,9 @@ export default function SinglePost() {
                 {/*{!post.photo && (<img className="singlePostImg" src="https://www.votesforyou.eu/images/titul/1-girl.jpg" alt=""/>)}*/}
 
                 {
-                    updateMode? <input type="text" value={post.title}/> : (
+                    updateMode? <input type="text" value={title} className="singlePostTitleInput" autoFocus  onChange={(e)=>setTitle(e.target.value)}/> : (
                         <h1 className="singlePostTitle">
-                            {post.title}
+                            {title}
                             {(user && post.username === user.username) && (
                                 <div className="singlePostEdit">
                                     <i className="singlePostIcon fa-solid fa-pen-to-square" onClick={()=>setUpdateMode(true)}/>
@@ -62,9 +73,21 @@ export default function SinglePost() {
                     </span>
                     <span className="singlePostDate">{new Date(post.createdAt).toDateString()}</span>
                 </div>
-                <p className="singlePostDescription">
-                    {post.desc}
-                </p>
+
+
+
+                {
+                    updateMode? (<textarea className="singlePostDescriptionInput" value={desc} onChange={(e)=>setDesc(e.target.value)}/>) : (
+                        <p className="singlePostDescription">
+                            {desc}
+                        </p>
+                    )
+                }
+                {
+                    updateMode &&(<button className="singlePostUpdateButton" onClick={handleUpdate}>Update</button>)
+                }
+
+
             </div>
 
         </div>

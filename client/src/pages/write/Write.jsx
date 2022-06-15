@@ -6,7 +6,7 @@ import {Context} from "../../context/Context";
 export default function Write() {
     const [title,setTitle]=useState("");
     const [desc,setDesc]=useState("");
-    const [file,setFile]=useState("");
+    const [file,setFile]=useState(null);
     const {user} = useContext(Context);
 
     const handleSubmit=async (e)=>{

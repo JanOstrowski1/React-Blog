@@ -36,7 +36,7 @@
 .settingsPP > img{
     width: 70px;
     height: 70px;
-    border-radius: 20px;
+    border-radius: 50%;
     object-fit: cover;
 }
 .settingsPPIcon{
@@ -71,5 +71,12 @@
     padding: 10px;
     margin-top: 20px;
     cursor: pointer;
+}
 
+.settingsInfo{
+    color:teal;
+    margin-top: 10px;
+    place-self: center;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 900;
 }

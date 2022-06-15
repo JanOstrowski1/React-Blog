@@ -1,5 +1,5 @@
 .register {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,7 +44,7 @@
 
 .registerLoginButton {
     position: absolute;
-    top: 60px;
+    top: 85px;
     right: 20px;
     background-color: lightcoral;
     cursor: pointer;
