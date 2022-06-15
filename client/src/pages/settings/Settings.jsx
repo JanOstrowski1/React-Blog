@@ -4,6 +4,7 @@ import SideBar from "../../components/sidebar/SideBar";
 import {Context} from "../../context/Context";
 import axios from "axios";
 
+
 export default function Settings() {
 
     const [file, setFile] = useState(null);
@@ -11,11 +12,14 @@ export default function Settings() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [success, setSuccess] = useState(false);
-    const placeholder = "http://localhost:5000/images/placeholder.jpg"
-    const {user} = useContext(Context);
 
+    const {user, dispatch} = useContext(Context);
+
+    const PF="http://localhost:5000/images/";
+    const placeholder = PF+ "placeholder.jpg";
     const handleSubmit = async (e) => {
         e.preventDefault();
+        dispatch({type:"UPDATE_START"});
         const updatedUser = {
             userId: user._id,
             username,
@@ -35,11 +39,11 @@ export default function Settings() {
             }
         }
         try {
-            await axios.put("/users/" + user._id, updatedUser);
+            const res = await axios.put("/users/" + user._id, updatedUser);
             setSuccess(true);
-
+            dispatch({type:"UPDATE_SUCCESS",payload:res.data});
         } catch (err) {
-            console.log(err);
+            dispatch({type:"UPDATE_FAILURE"});
         }
 
 
@@ -55,7 +59,7 @@ export default function Settings() {
                 <form className="settingsForm" onSubmit={handleSubmit}>
                     <label>Profile Picture</label>
                     <div className="settingsPP">
-                        <img className="topImg"  src={file ? URL.createObjectURL(file) : (user.profilePic?user.profilePic:placeholder)} alt=""/>
+                        <img className="topImg"  src={file ? URL.createObjectURL(file) : (user.profilePic?PF+user.profilePic:placeholder)} alt=""/>
 
                         <label htmlFor="fileInput">
                             <i className="settingsPPIcon fa-solid fa-circle-user"/>
@@ -63,11 +67,11 @@ export default function Settings() {
                         <input type="file" id="fileInput" style={{display: "none"}} onChange={e=>setFile(e.target.files[0])}/>
                     </div>
                     <label>Username</label>
-                    <input type="text" placeholder={user.username} onChange={e=>setUsername(e.target.value)}/>
+                    <input required type="text" placeholder={user.username} onChange={e=>setUsername(e.target.value)}/>
                     <label>Email</label>
-                    <input type="email" placeholder={user.email} onChange={e=>setEmail(e.target.value)} />
+                    <input required type="email" placeholder={user.email} onChange={e=>setEmail(e.target.value)} />
                     <label>Password</label>
-                    <input type="password" onChange={e=>setPassword(e.target.value)}/>
+                    <input required type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
                     <button className="settingsSubmit" type="submit">Update</button>
                     {
                         success && <span className="settingsInfo">Updated successfully</span>

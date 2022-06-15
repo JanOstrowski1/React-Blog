@@ -8,7 +8,8 @@ export default function TopBar() {
     const handleLogout= ()=>{
         dispatch({type:"LOGOUT"});
     };
-    const placeholder = "http://localhost:5000/images/placeholder.jpg"
+    const PF="http://localhost:5000/images/";
+    const placeholder = PF+ "placeholder.jpg";
     return (
         <div className="top">
             <div className="topLeft">
@@ -32,7 +33,7 @@ export default function TopBar() {
                 {
                     user ? (
                         <Link className="link" to="/settings">
-                            {user.profilePic?(<img className="topImg"  src={user.profilePic} alt=""/>):
+                            {user.profilePic?(<img className="topImg"  src={PF+user.profilePic} alt=""/>):
                                 (<img className="topImg"  src={placeholder} alt=""/>)}
                         </Link>
                     ) : (

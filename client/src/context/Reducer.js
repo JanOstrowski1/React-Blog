@@ -21,7 +21,8 @@ const Reducer = (state,action)=>{
 
         case "UPDATE_START":
             return{
-               ...state
+               ...state,
+                isFetching: true,
             };
         case "UPDATE_SUCCESS":
             return{
@@ -31,7 +32,7 @@ const Reducer = (state,action)=>{
             };
         case "UPDATE_FAILURE":
             return{
-                user:null,
+                user:state.user,
                 isFetching:false,
                 error:true,
             };
@@ -44,7 +45,7 @@ const Reducer = (state,action)=>{
             };
         default:{
             return state;
-        };
+        }
     }
 }
 

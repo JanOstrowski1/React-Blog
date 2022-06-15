@@ -18,14 +18,14 @@ export const Logout = () => ({
 })
 
 export const UpdateStart = (userCredentials) => ({
-    type: "LOGIN_START"
+    type: "UPDATE_START"
 })
 
 export const UpdateSuccess = (user) => ({
-    type: "LOGIN_SUCCESS",
+    type: "UPDATE_SUCCESS",
     payload: user,
 })
 
 export const UpdateFailure = () => ({
-    type: "LOGIN_FAILURE"
+    type: "UPDATE_FAILURE"
 })
